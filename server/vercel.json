@@ -1,16 +1,24 @@
 {
+  "functions": {
+    "api/server": {
+      "runtime": "python3.9",
+      "memory": 512,
+      "maxDuration": 30
+    }
+  },
   "builds": [
     {
-      "src": "server/wsgi.py",
+      "src": "server/**",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "server/wsgi.py"
+      "dest": "api/server"
     }
   ]
 }

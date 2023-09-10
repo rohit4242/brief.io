@@ -1,12 +1,11 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import os
 import openai
 
-# Define your OpenAI API key
-api_key = "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"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# Initialize the OpenAI API client
-openai.api_key = api_key
+openai.api_key = SECRET_KEY
 
 
 @csrf_exempt

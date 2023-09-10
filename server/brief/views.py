@@ -1,10 +1,12 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from django.http import JsonResponse
+import openai
 
-model = AutoModelForSeq2SeqLM.from_pretrained("t5-small")
-tokenizer = AutoTokenizer.from_pretrained("t5-small")
+# Define your OpenAI API key
+api_key = "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"
+
+# Initialize the OpenAI API client
+openai.api_key = api_key
 
 
 @csrf_exempt
@@ -13,27 +15,29 @@ def summarize_text(request):
         data = request.POST.get("text", "")
 
         if data:
-            tokens_input = tokenizer.encode(
-                "summarize: " + data,
-                return_tensors="pt",
-                max_length=tokenizer.model_max_length,
-                truncation=True,
-            )
-
-            summary_ids = model.generate(
-                tokens_input,
-                min_length=80,
-                max_length=150,
-                length_penalty=2.0,  
-                num_beams=4, 
-                no_repeat_ngram_size=3,
-                early_stopping=True,
-            )
-
-            summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-
+            summary = summarize_text_with_chatgpt(data)
             return JsonResponse({"summary": summary})
         else:
             return JsonResponse({"error": "No text provided."}, status=400)
     else:
         return JsonResponse({"error": "Only POST requests are supported."}, status=405)
+
+
+def summarize_text_with_chatgpt(text):
+    # Construct the prompt for summarization
+    prompt = f"Summarize the following text: {text}"
+
+    # Call ChatGPT Turbo to generate a summary
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=50,  # Adjust the max_tokens for desired summary length
+        n=1,  # Number of responses to generate
+        stop=None,  # You can add a stop condition here if needed
+        temperature=0.7,  # Adjust the temperature for creativity
+    )
+
+    # Extract the summary from the response
+    summary = response.choices[0].text.strip()
+
+    return summary

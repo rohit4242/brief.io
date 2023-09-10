@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 import openai
 
 # Define your OpenAI API key
-api_key = "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"
+api_key = "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"
 
 # Initialize the OpenAI API client
 openai.api_key = api_key

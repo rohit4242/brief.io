@@ -3,8 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 import openai
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
+SECRET_KEY = os.getenv("SECRET_KEY")
 openai.api_key = SECRET_KEY
 
 

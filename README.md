@@ -1,4 +1,3 @@
-
 # Text Summarizer Using Chat-GPT Turbo 3.5
 
 ## Overview
@@ -12,20 +11,23 @@ The backend API is built using Django and Python. It uses the `chatGPT` library 
 # Text Summarizer API Documentation
 
 ## API Endpoint
+
 The API endpoint for the text summarizer is `https://text-summarizer-backend.onrender.com/api/summarize/`. It supports POST requests.
 
 ## Request Format
+
 The request format is JSON. The payload must contain a single key-value pair, where the key is `text` and the value is the text to be summarized. For example:
+
 ```json
 {
   "text": "This is a sample text to summarize."
-
 }
 ```
 
 ## Testing the API
 
 ### Using Curl
+
 You can test the API using `curl` as follows:
 
 ```bash
@@ -38,10 +40,11 @@ curl -X POST \
 
 ```
 
-
 # Frontend
 
 The frontend of this project is developed using Next.js and TypeScript. It provides a user-friendly interface for interacting with the Text Summarizer API.
+
+Frontend URL: [https://brief-io.vercel.app/](https://brief-io.vercel.app/)
 
 ### How to Use the Frontend
 

@@ -22,20 +22,19 @@ def summarize_text(request):
 
 
 def summarize_text_with_chatgpt(text):
-    # Construct the prompt for summarization
-    prompt = f"Summarize the following text: {text}"
+    prompt = (
+        f"Summarize the following text into a concise summary in under 10 lines: {text}"
+    )
 
-    # Call ChatGPT Turbo to generate a summary
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=50,  # Adjust the max_tokens for desired summary length
-        n=1,  # Number of responses to generate
-        stop=None,  # You can add a stop condition here if needed
-        temperature=0.7,  # Adjust the temperature for creativity
+        max_tokens=150,
+        n=1,
+        stop=None,
+        temperature=0.7,
     )
 
-    # Extract the summary from the response
     summary = response.choices[0].text.strip()
 
     return summary

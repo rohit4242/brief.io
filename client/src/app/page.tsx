@@ -46,7 +46,7 @@ export default function Home() {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/summarize/`,
+        `https://text-summarizer-backend.onrender.com/api/summarize/`,
         formData
       );
       router.refresh();
